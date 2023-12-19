@@ -44,10 +44,10 @@ docker run -d --name CONTAINER_NAME -p 6379:6379 redis
 
 ```bash
 # Clone the repository
-git clone https://github.com/McTechie/node-ws-redis.git
+git clone https://github.com/McTechie/redis-ws.git
 
 # Change directory
-cd node-ws-redis
+cd redis-ws
 
 # Install pnpm (Skip if already installed)
 npm i -g pnpm
