@@ -1,0 +1,13 @@
+# build folder
+dist/
+
+# dependencies
+node_modules/
+
+# local env files
+.env
+.env.local
+.env.production
+
+# macOS
+.DS_Store
