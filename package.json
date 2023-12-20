@@ -14,10 +14,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.10.5",
+    "drizzle-kit": "^0.20.7",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.5.1",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.29.1",
     "ioredis": "^5.3.2",
     "socket.io": "^4.7.2"
   }

@@ -4,6 +4,8 @@ import Redis from 'ioredis';
 // named imports
 import { Server } from 'socket.io';
 import { Logger } from '../logger';
+import { db } from '../db/client';
+import { messages } from '../db/schema';
 
 const logger = new Logger();
 
@@ -15,6 +17,7 @@ const sub = new Redis(REDIS_URL);
 enum Event {
   CONNECTION = 'connection',
   MESSAGE = 'event:message',
+  LISTEN = 'event:listen',
   DISCONNECT = 'disconnect',
 }
 
@@ -27,7 +30,6 @@ class SocketService {
 
   // initialize the socket.io server
   constructor() {
-    logger.success('Socket Service initialized');
     this._io = new Server({
       cors: {
         origin: '*',
@@ -35,7 +37,8 @@ class SocketService {
     });
     
     // subscribe to the MESSAGES channel
-    sub.subscribe('MESSAGES');
+    sub.subscribe(Channel.MESSAGES);
+    logger.success('🔌 Socket Service initialized');
   }
 
   // getter method to return the socket.io server
@@ -44,7 +47,7 @@ class SocketService {
   }
 
   // method to emit messages to a channel
-  private publish(channel: string, message: string): void {
+  private publish(channel: Channel, message: string): void {
     pub.publish(channel, JSON.stringify({ message }));
   }
 
@@ -53,24 +56,30 @@ class SocketService {
     const io = this.io;
     
     io.on(Event.CONNECTION, (socket) => {
-      logger.info(`Socket connected: ${socket.id}`);
+      logger.info(`[Socket] Connection Established: ${socket.id}`);
 
       // emit the message to the REDIS channel
       socket.on(Event.MESSAGE, (message: string) => {
-        logger.info(`Message received: ${message}`);
+        logger.info(`[Redis] Publishing: ${message}`);
         this.publish(Channel.MESSAGES, message);
+        logger.info(`[Redis] Published!`);
       });
 
       // relay the message to the clients
-      sub.on('message', (channel, message) => {
+      sub.on('message', async (channel, message) => {
         if (channel === Channel.MESSAGES) {
-          logger.info(`Message sent: ${message}`);
-          io.emit('message', message);
+          logger.info(`[Redis] Consuming: ${message}`);
+          io.emit(Event.LISTEN, message);
+          logger.info(`[Redis] Consumed!`);
+          
+          logger.info(`[DB] Inserting: ${message}`);
+          await db.insert(messages).values({ text: message });
+          logger.info(`[DB] Inserted!`);
         }
       });
       
       socket.on(Event.DISCONNECT, () => {
-        logger.info(`Socket disconnected: ${socket.id}`);
+        logger.info(`[Socket] Disconnected: ${socket.id}`);
       });
     });
   }
