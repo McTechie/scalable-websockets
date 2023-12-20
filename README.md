@@ -76,7 +76,7 @@ POSTGRES_DATABASE=
 
 ```bash
 # Clone the repository
-git clone https://github.com/McTechie/redis-ws.git
+git clone https://github.com/McTechie/scalable-websockets.git
 
 # Change directory
 cd scalable-websockets
