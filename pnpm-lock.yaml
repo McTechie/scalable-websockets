@@ -17,6 +17,9 @@ dependencies:
   ioredis:
     specifier: ^5.3.2
     version: 5.3.2
+  kafkajs:
+    specifier: ^2.2.4
+    version: 2.2.4
   socket.io:
     specifier: ^4.7.2
     version: 4.7.2
@@ -1454,6 +1457,11 @@ packages:
       difflib: 0.2.4
       dreamopt: 0.8.0
     dev: true
+
+  /kafkajs@2.2.4:
+    resolution: {integrity: sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==}
+    engines: {node: '>=14.0.0'}
+    dev: false
 
   /lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}

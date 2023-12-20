@@ -1,18 +1,22 @@
 // default imports
 import http from 'http';
 import SocketService from './services/socket';
+import KafkaService from './services/kafka';
 
 // named imports
 import { config } from 'dotenv';
 import { Logger } from './logger';
+import { Topic } from './common';
 
 // environment variables
 config();
 
-// create a new instance of Logger
+const kafka = KafkaService.getInstance();
 const logger = new Logger();
 
 async function init() {
+  kafka.consumeMessages(Topic.MESSAGES);
+  
   // create a new instance of SocketService
   const socketService = new SocketService();
   

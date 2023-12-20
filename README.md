@@ -37,6 +37,17 @@ flowchart LR
   end
 ```
 
+---
+
+### Tech Stack
+
+- [x] Node.js (Server)
+- [x] Redis (Sync messages between multiple servers)
+- [x] Kafka (Gather messages with a high throughput and allow consumption)
+- [x] Drizzle (ORM for Postgres)
+
+---
+
 ### How to run
 
 > This project requires Node.js, Redis, Kafka and Postgres to run.
@@ -53,6 +64,7 @@ Don't forget to add the following environment variables in the `.env` file:
 
 ```bash
 REDIS_URL=
+KAFKA_BROKER_URL=
 ```
 
 #### Part 2: Postgres
@@ -90,6 +102,8 @@ pnpm install
 # Run the server
 pnpm dev
 ```
+
+---
 
 ### Demo
 
